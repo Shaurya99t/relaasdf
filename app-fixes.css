@@ -1,0 +1,132 @@
+/* Final responsive layer: keeps the state-driven decks inside their own stage. */
+:root {
+  --pink: #d88991;
+  --rose: #c97983;
+  --soft-pink: #f4dde0;
+}
+
+html { overflow-x: clip; }
+body { overflow-x: clip; }
+
+.music-bar {
+  position: sticky;
+  top: 68px;
+  z-index: 40;
+  width: 100%;
+  background: rgba(250, 247, 240, .94);
+  border-bottom: 1px solid rgba(82, 115, 111, .16);
+  box-shadow: 0 8px 24px rgba(35, 48, 46, .07);
+  backdrop-filter: blur(16px);
+}
+.music-bar audio { display: none; }
+.music-bar-inner {
+  width: min(1120px, calc(100% - 32px));
+  min-height: 58px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(135px, 1fr) auto minmax(150px, 1.5fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+.music-brand { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.music-heart { color: var(--rose); font-size: 18px; }
+.music-brand > div { min-width: 0; }
+.music-label { display: block; color: var(--rose); font: 700 9px/1.2 var(--sans); letter-spacing: .16em; }
+.music-label b { font-weight: 700; color: var(--muted); }
+.music-brand strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font: 500 14px/1.3 var(--serif); }
+.music-actions { display: flex; align-items: center; gap: 4px; }
+.music-control { width: 34px; height: 34px; border: 1px solid rgba(201, 121, 131, .34); border-radius: 50%; background: transparent; color: var(--teal-deep); cursor: pointer; }
+.music-control:hover, .music-control:focus-visible { background: var(--soft-pink); color: var(--rose); }
+.music-play { background: var(--rose); color: #fff; border-color: var(--rose); }
+.music-progress-wrap { min-width: 0; }
+.music-progress-wrap input, .music-volume input { accent-color: var(--rose); width: 100%; }
+.music-time { display: flex; justify-content: space-between; color: var(--muted); font: 10px var(--sans); }
+.music-volume { display: flex; align-items: center; gap: 6px; color: var(--rose); width: 92px; }
+.music-volume input { width: 72px; }
+.music-prompt { grid-column: 1 / -1; justify-self: center; border: 0; background: none; color: var(--rose); font: italic 14px var(--serif); cursor: pointer; padding: 3px 0 8px; }
+
+.swipe-deck { width: 100%; min-width: 0; }
+.simple-deck { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+.simple-deck .deck-viewport { min-height: 0 !important; overflow: visible !important; padding: 0 0 20px !important; }
+.simple-deck .deck-track { min-height: 0 !important; }
+.simple-deck .deck-card { position: relative !important; left: auto !important; top: auto !important; width: min(86vw, 620px) !important; max-width: 100% !important; margin: 0 auto !important; transform: none !important; }
+.simple-deck .deck-card[aria-hidden="true"] { display: none !important; }
+.simple-deck .deck-card.is-active { display: block !important; opacity: 1 !important; visibility: visible !important; }
+#storyGrid .story-deck-card { height: min(118vw, 500px); min-height: 420px; }
+#notesGrid .note-deck-card { height: 240px; min-height: 240px; }
+#storyGrid .story-card-image { position: absolute; inset: 0; height: 100%; }
+.deck-viewport { width: 100%; min-width: 0; overflow: hidden !important; padding: 12px 0 20px !important; touch-action: pan-y; overscroll-behavior-x: contain; }
+.deck-track { position: relative !important; display: block !important; width: 100% !important; min-width: 0 !important; height: 100%; }
+.deck-card { box-sizing: border-box; max-width: calc(100% - 24px); overflow: hidden; }
+.deck-card[aria-hidden="true"] { visibility: visible; }
+.deck-card[data-slot="active"] { z-index: 3; opacity: 1; }
+.deck-card[data-slot="prev"], .deck-card[data-slot="next"] { z-index: 1; }
+.deck-card img { display: block; max-width: 100%; }
+.image-frame { min-width: 0; overflow: hidden; }
+.memory-deck-card { width: min(86vw, 620px) !important; }
+.memory-deck-card .memory-card-image { height: auto !important; aspect-ratio: 4 / 3; background: #f7f1e8; }
+.memory-deck-card .memory-card-image img { object-fit: contain !important; object-position: center; background: #f7f1e8; }
+.story-deck-card .story-card-image img { object-position: center; }
+.deck-controls { position: relative; z-index: 5; margin-top: 0; }
+.deck-arrow { min-width: 44px; min-height: 44px; color: var(--rose); }
+.deck-dots button.is-active, .deck-dots span.is-active { background: var(--rose); }
+.deck-hint { color: var(--rose); }
+.story-quote { position: relative; z-index: 1; margin: 13px 0 0; padding-left: 12px; border-left: 1px solid var(--soft-pink); color: rgba(255,255,255,.82); font: italic 14px/1.35 var(--serif); }
+.note-front { display: grid !important; grid-template-columns: 1fr auto; grid-template-rows: auto auto 1fr auto; align-items: start !important; gap: 6px 10px; text-align: left; }
+.note-front .note-number { grid-column: 1 / -1; color: var(--rose); font: 700 9px var(--sans); letter-spacing: .15em; }
+.note-front h3 { grid-column: 1 / -1; margin: 0; color: var(--teal-deep); font: italic 25px/1.05 var(--serif); }
+.note-front p { grid-column: 1 / -1; margin: 0; color: var(--teal-deep); font: italic 15px/1.35 var(--serif); }
+.note-front small { grid-column: 1 / -1; align-self: end; color: var(--rose); font: 10px var(--sans); letter-spacing: .08em; }
+.memory-section, #memories, .story-section, .notes-section, .sage-section { padding-top: clamp(56px, 7vw, 96px) !important; padding-bottom: clamp(56px, 7vw, 96px) !important; }
+
+.song-section .player { display: none; }
+.song-section .song-layout { display: block; }
+.song-section { padding-top: 56px !important; padding-bottom: 56px !important; }
+
+.reveal { will-change: opacity, transform; }
+
+@media (max-width: 599px) {
+  .site-nav { padding-top: max(12px, env(safe-area-inset-top)); }
+  .music-bar { top: 56px; }
+  .music-bar-inner { width: min(100% - 24px, 430px); grid-template-columns: minmax(0, 1fr) auto; gap: 7px 10px; padding: 8px 0; }
+  .music-actions { grid-column: 2; grid-row: 1; }
+  .music-progress-wrap { grid-column: 1 / -1; grid-row: 2; }
+  .music-volume { display: none; }
+  .music-brand strong { font-size: 13px; }
+  .music-control { width: 38px; height: 38px; }
+  .music-prompt { grid-row: 3; }
+  .section-pad { padding-top: 56px !important; padding-bottom: 56px !important; }
+  .section-heading { margin-bottom: 12px !important; }
+  .section-heading h2 { max-width: 100%; font-size: clamp(34px, 10vw, 48px) !important; }
+  .section-intro { margin-bottom: 20px !important; }
+  .deck-card { width: calc(100vw - 32px) !important; max-width: none; }
+  .memory-deck-card { width: calc(100vw - 32px) !important; }
+  .timeline-deck .deck-viewport { min-height: 360px !important; }
+  .timeline-deck-card { height: 330px !important; grid-template-columns: 39% 1fr; }
+  .timeline-deck-card .deck-card-copy { padding: 18px !important; }
+  .timeline-deck-card h3 { font-size: clamp(24px, 7vw, 34px) !important; }
+  .memory-deck .deck-viewport { min-height: 470px !important; }
+  .memory-deck-card { height: auto !important; min-height: 0 !important; }
+  .memory-deck-card .memory-card-image { aspect-ratio: 4 / 3; }
+  .memory-deck-card .deck-card-copy { min-height: 142px !important; padding: 18px !important; }
+  .story-deck .deck-viewport { min-height: 460px !important; }
+  .story-deck .deck-card { height: min(118vw, 500px) !important; min-height: 420px !important; }
+  .story-deck-card .deck-card-copy { padding: 20px !important; }
+  .story-deck-card .deck-card-copy h3 { font-size: clamp(28px, 8vw, 38px) !important; }
+  .notes-deck .deck-viewport { min-height: 300px !important; }
+  .notes-deck .deck-card { height: 240px !important; }
+  .future-card.swipe-deck .deck-viewport { min-height: 380px !important; }
+  .future-deck-card { height: auto !important; min-height: 320px; padding: 26px !important; }
+  .letter-pages .deck-viewport { min-height: 490px !important; }
+  .letter-page { height: auto !important; min-height: 430px; padding: 24px 22px !important; }
+  .letter-page p { font-size: 15px !important; line-height: 1.7 !important; }
+  .letter-cover { min-height: 330px !important; padding: 30px 22px !important; }
+}
+
+@media (min-width: 600px) {
+  .deck-card { width: min(72vw, 620px) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-card, .reveal { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#233b3a">
+  <meta name="description" content="A birthday love letter and five-year story made just for you.">
+  <title>For My Jaan Bacha | Our Story</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="refine.css">
+  <link rel="stylesheet" href="carousel.css">
+  <link rel="stylesheet" href="app-fixes.css">
+</head>
+<body class="is-locked">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress-track" aria-hidden="true"><span id="storyProgress"></span></div>
+
+  <div id="opening-screen" class="opening-screen" aria-label="Opening screen">
+    <div class="opening-glow" aria-hidden="true"></div>
+    <div class="particle-field" aria-hidden="true"></div>
+    <div class="opening-content">
+      <p class="eyebrow">09 <span>•</span> 09 <span>•</span> 2026</p>
+      <p class="opening-kicker">For My <em>Jaan Bacha</em> <span aria-hidden="true">♥</span></p>
+      <h1>A little piece of our story,<br><i>made just for you.</i></h1>
+      <button class="button button-light" id="openHeart" type="button">Open My Heart <span aria-hidden="true">♥</span></button>
+      <p class="opening-hint">Take your time. There is a lot of us in here.</p>
+    </div>
+    <div class="opening-mark" aria-hidden="true">5 <span>years</span></div>
+  </div>
+
+  <header class="site-nav" id="siteNav">
+    <a class="wordmark" href="#top" aria-label="Back to the beginning">our <i>story</i></a>
+    <div class="nav-meta"><span>5 years</span><span class="nav-dot"></span><span>year 6</span></div>
+    <button class="icon-button" id="navReplay" type="button" aria-label="Replay our story" title="Replay our story">↻</button>
+  </header>
+
+  <aside class="music-bar" id="musicBar" aria-label="Our song player">
+    <div class="music-bar-inner">
+      <div class="music-brand">
+        <span class="music-heart" aria-hidden="true">♥</span>
+        <div><span class="music-label">OUR SONG · <b id="musicPosition">01 / 04</b></span><strong id="musicTitle">Loading our song...</strong></div>
+      </div>
+      <div class="music-actions">
+        <button class="music-control" id="musicPrev" type="button" aria-label="Previous song">←</button>
+        <button class="music-control music-play" id="musicToggle" type="button" aria-label="Play our song">▶</button>
+        <button class="music-control" id="musicNext" type="button" aria-label="Next song">→</button>
+      </div>
+      <div class="music-progress-wrap">
+        <audio id="ourSong" preload="metadata"></audio>
+        <input id="musicProgress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Song progress">
+        <div class="music-time"><span id="musicCurrent">0:00</span><span id="musicDuration">0:00</span></div>
+      </div>
+      <label class="music-volume" aria-label="Volume"><span aria-hidden="true">⌁</span><input id="musicVolume" type="range" min="0" max="1" value="0.72" step="0.01"></label>
+      <button class="music-prompt" id="musicAutoplayPrompt" type="button" hidden>Tap to play our song ♡</button>
+    </div>
+  </aside>
+
+  <main id="story" aria-hidden="true">
+    <section class="hero section-pad" id="top">
+      <div class="hero-art art-sun" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow accent">A birthday letter, a memory box, a promise</p>
+          <h2>For the girl who<br><i>became home.</i></h2>
+          <p class="hero-intro">Today is your birthday. Somewhere along the way, it also became a celebration of every ordinary, beautiful, difficult, hilarious day that brought us here.</p>
+          <div class="hero-signature"><span>09.09.2026</span><i>with all my love</i></div>
+        </div>
+        <div class="hero-stamp reveal delay-1" aria-hidden="true"><span>5</span><small>years<br>of us</small></div>
+      </div>
+      <a class="scroll-cue" href="#birthday"><span>keep reading</span><b>↓</b></a>
+    </section>
+
+    <section class="section-pad birthday-section" id="birthday">
+      <div class="container narrow">
+        <div class="section-heading reveal"><p class="eyebrow accent">Chapter one · the day is yours</p><h2>Happy Birthday,<br><i>My Love</i> <span>♥</span></h2></div>
+        <article class="birthday-card paper-card reveal">
+          <div class="image-frame birthday-image" data-image="birthday" data-label="Your birthday photo"><img data-image-src alt="A birthday memory" loading="lazy"><span class="image-placeholder">your favourite<br>photo goes here</span><span class="image-note">09 / 09</span></div>
+          <div class="birthday-copy">
+            <span class="card-index">01 / birthday card</span>
+            <p class="lead">Today is about you.<br>The person who somehow became one of the most important parts of my life.</p>
+            <p>And somehow, your birthday also gives me another reason to celebrate us.</p>
+            <div class="candle-row" aria-hidden="true"><span>✦</span><i></i><i></i><i></i><span>✦</span></div>
+            <p class="hand-note">I hope you feel as loved as you make me feel.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-pad sage-section" id="years">
+      <div class="container">
+        <div class="section-heading split-heading reveal"><div><p class="eyebrow">Chapter two · then and now</p><h2>5 Years<br><i>of Us</i> <span>♥</span></h2></div><p class="section-aside">Five years ago, I didn't know that one person would become such a huge part of my life.<br><br>And somehow, here we are.<br><br><b>5 years. Countless memories. So many fights. Even more laughs. And still... you.</b></p></div>
+        <div class="timeline" aria-label="Our relationship timeline">
+          <div class="timeline-line" aria-hidden="true"></div>
+          <article class="timeline-item reveal" data-year="2021"><div class="timeline-dot"></div><div class="timeline-card paper-card"><div class="timeline-photo image-frame" data-image="year2021"><img data-image-src alt="A memory from 2021" loading="lazy"><span class="image-placeholder">2021<br>the beginning</span></div><div class="timeline-copy"><span class="timeline-year">2021</span><h3>The Beginning <span>♥</span></h3><p>The year a simple hello quietly changed everything.</p><small>where our story found its first page</small></div></div></article>
+          <article class="timeline-item reveal delay-1" data-year="2022"><div class="timeline-dot"></div><div class="timeline-card paper-card"><div class="timeline-photo image-frame" data-image="year2022"><img data-image-src alt="A memory from 2022" loading="lazy"><span class="image-placeholder">2022<br>becoming us</span></div><div class="timeline-copy"><span class="timeline-year">2022</span><h3>Becoming Us</h3><p>Learning each other's rhythms, jokes, moods, and favourite little things.</p><small>the year ordinary started feeling special</small></div></div></article>
+          <article class="timeline-item reveal" data-year="2023"><div class="timeline-dot"></div><div class="timeline-card paper-card"><div class="timeline-photo image-frame" data-image="year2023"><img data-image-src alt="A memory from 2023" loading="lazy"><span class="image-placeholder">2023<br>more memories</span></div><div class="timeline-copy"><span class="timeline-year">2023</span><h3>More Memories</h3><p>More laughter, more stories, more of the little world that was only ours.</p><small>the year we kept choosing the next day together</small></div></div></article>
+          <article class="timeline-item reveal delay-1" data-year="2024"><div class="timeline-dot"></div><div class="timeline-card paper-card"><div class="timeline-photo image-frame" data-image="year2024"><img data-image-src alt="A memory from 2024" loading="lazy"><span class="image-placeholder">2024<br>growing together</span></div><div class="timeline-copy"><span class="timeline-year">2024</span><h3>Growing Together</h3><p>Life changed shape, and we learned that love could make room for change.</p><small>not always easy, always worth it</small></div></div></article>
+          <article class="timeline-item reveal" data-year="2025"><div class="timeline-dot"></div><div class="timeline-card paper-card"><div class="timeline-photo image-frame" data-image="year2025"><img data-image-src alt="A memory from 2025" loading="lazy"><span class="image-placeholder">2025<br>still choosing</span></div><div class="timeline-copy"><span class="timeline-year">2025</span><h3>Still Choosing Each Other</h3><p>Even through the messy bits, there was always a way back to us.</p><small>the year love looked like staying</small></div></div></article>
+          <article class="timeline-item reveal delay-1" data-year="2026"><div class="timeline-dot"></div><div class="timeline-card paper-card"><div class="timeline-photo image-frame" data-image="year2026"><img data-image-src alt="A memory from 2026" loading="lazy"><span class="image-placeholder">2026<br>five years complete</span></div><div class="timeline-copy"><span class="timeline-year">2026</span><h3>5 Years Complete <span>♥</span></h3><p>Today, we get to look back and smile at how far we have come.</p><small>09 September · the next page begins</small></div></div></article>
+          <div class="year-six reveal"><span class="year-six-line"></span><p class="eyebrow">And now, together</p><strong>YEAR 6<br><i>BEGINS...</i></strong><span class="year-six-heart">♥</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad" id="memories">
+      <div class="container">
+        <div class="section-heading centered reveal"><p class="eyebrow accent">Chapter three · kept close</p><h2>Our Little<br><i>Moments</i> <span>✦</span></h2><p>Not every favourite memory is a big one. Some are just days that felt like us.</p></div>
+        <div class="memory-grid" id="memoryGrid"></div>
+      </div>
+    </section>
+
+    <section class="section-pad story-section" id="stories">
+      <div class="container">
+        <div class="section-heading reveal"><p class="eyebrow">Chapter four · little stories</p><h2>Us, In Different<br><i>Little Stories</i> <span>✦</span></h2></div>
+        <div class="story-grid" id="storyGrid"></div>
+      </div>
+    </section>
+
+    <section class="section-pad notes-section" id="notes">
+      <div class="container narrow">
+        <div class="section-heading centered reveal"><p class="eyebrow accent">Chapter five · things I mean</p><h2>Things I Never<br><i>Say Enough</i> <span>♥</span></h2><p>Open these when you need a small reminder of how very loved you are.</p></div>
+        <div class="notes-grid" id="notesGrid"></div>
+      </div>
+    </section>
+
+    <!-- The standalone song chapter was intentionally removed. The player remains in the top bar. -->
+
+    <section class="section-pad letter-section" id="letter">
+      <div class="container narrow">
+        <div class="section-heading centered reveal"><p class="eyebrow">Chapter seven · from me to you</p><h2>A Letter<br><i>For You</i> <span>♥</span></h2></div>
+        <article class="love-letter reveal"><div class="letter-top"><span>09.09.2026</span><span>my jaan bacha</span></div><div class="letter-copy">
+          <p class="letter-opening">5 years… ❤️</p>
+          <p>Honestly, kabhi kabhi sochta hoon ki ye 5 saal itni jaldi kaise nikal gaye.</p>
+          <p>Jab peeche mudkar dekhta hoon toh realise hota hai ki humne saath mein kitna kuch experience kar liya — so many memories, hasi-mazaak, fights, misunderstandings, emotional moments, random conversations aur woh chhoti chhoti cheezein jo shayad kisi aur ke liye normal hongi, but mere liye hamesha special rahengi.</p>
+          <p>In these 5 years, hum dono bhi bohot change hue hain. Life change hui, situations change hui, humari priorities bhi change hui, but somehow ek cheez same rahi — humara ek dusre ke saath rehna.</p>
+          <p>Humara relationship kabhi perfect nahi raha, aur honestly, main chahta bhi nahi ki woh perfect ho. Hum lade hain, gussa hue hain, kabhi ek dusre ko samajhne mein fail hue hain, kabhi ek dusre ko hurt bhi kiya hai.</p>
+          <p>But every time, somehow, we found our way back to each other.</p><p>And I think that's what makes what we have so real.</p>
+          <p>Meri jaan bacha, tum kab meri life ka itna important part ban gayi, pata hi nahi chala.</p>
+          <p>Ab koi bhi achhi baat hoti hai toh sabse pehle tumhe batane ka mann karta hai, kuch bura ho toh tumse baat karne ka mann karta hai, aur kabhi kabhi bina kisi reason ke bhi bas tumse baat karne ka mann karta hai.</p>
+          <p>Tumhare saath ek alag sa comfort hai.</p>
+          <p>I can be completely myself with you — meri achhi side bhi, meri stupid side bhi, meri irritating habits bhi 😂 — aur phir bhi mujhe pata hota hai ki tum ho.</p>
+          <p>I think over these 5 years, my love for you has changed in the best possible way.</p>
+          <p>Pehle shayad love zyada excitement tha, but aaj uske saath understanding, comfort, respect aur ek strong feeling bhi hai ki haan, mujhe isi person ke saath apni life share karni hai.</p>
+          <p>Mujhe future ka exact plan nahi pata.</p><p>But itna zaroor pata hai ki jo bhi life humare saamne laaye, main tumhare saath face karna chahta hoon.</p>
+          <p>Mujhe tumhare saath sirf special days aur big moments nahi chahiye.</p><p>Mujhe woh normal life bhi chahiye — random plans, late-night talks, chhoti chhoti outings, stupid jokes, ek dusre ko unnecessarily irritate karna, kisi chhoti si baat pe ladna aur phir kuch der baad sab normal kar lena.</p>
+          <p>Main ye promise nahi karunga ki hum kabhi nahi ladenge ya life hamesha easy rahegi.</p><p>But I promise that whenever things get difficult, main humare relationship ko choose karunga.</p>
+          <p>Gusse mein bhi tumhe samajhne ki koshish karunga, ego ko humse bada nahi hone dunga, aur jab life difficult hogi toh tumhare saath khada rahunga.</p><p>I want us to always remember that it's never me against you — it's always us against the problem.</p>
+          <p>Thank you for these 5 years.</p><p>Thank you for staying, for understanding me, for tolerating my nonsense 😂, for being there through the good days and the not-so-good ones.</p>
+          <p>5 years later, I still look at you and feel lucky that it's you.</p><p>And if I had to choose all over again, knowing everything we've been through, I would still choose you.</p>
+          <p class="letter-closing">Every single time.<br><span>♥</span></p>
+        </div><div class="letter-sign">yours,<br><i>always</i></div></article>
+      </div>
+    </section>
+
+    <section class="section-pad secret-section" id="secret">
+      <div class="container narrow centered-content">
+        <div class="section-heading centered reveal"><p class="eyebrow">Chapter eight · one more thing</p><h2>There's One<br><i>More Thing...</i> <span>⌕</span></h2></div>
+        <article class="secret-card reveal" id="secretCard"><div class="secret-envelope"><div class="envelope-flap"></div><div class="envelope-seal">♥</div></div><div class="secret-message"><p>Jaan bacha...</p><p>5 years are complete.</p><p>But I'm not celebrating the end of 5 years.</p><p>I'm celebrating the beginning of our 6th. ❤️</p><p>I don't know exactly what the next years will look like.</p><p>But I know who I want beside me while I live them.</p><p class="secret-you">You.</p></div><button class="button button-dark" id="openSecret" type="button">Open It <span>↗</span></button><strong class="year-six-reveal">Year 6 <span>→</span> ♥</strong></article>
+      </div>
+    </section>
+
+    <section class="section-pad future-section" id="future">
+      <div class="container narrow">
+        <div class="section-heading centered reveal"><p class="eyebrow accent">Chapter nine · the promise</p><h2>To Our Next<br><i>Chapter</i> <span>∞</span></h2></div>
+        <article class="future-card paper-card reveal"><span class="card-index">a promise for year 6 and every year after</span><p>Aage kya hoga, honestly mujhe nahi pata.</p><p>Life mein kya changes aayenge, hum kahan honge, kitna busy honge, ye sab main predict nahi kar sakta.</p><p>But ek cheez ka promise hai, jaan bacha — main har situation mein tumhe apna person samajhunga.</p><p>Sirf achhe time mein nahi, balki jab sab kuch thoda messy ho, jab hum dono irritated ho, jab life difficult ho, tab bhi.</p><p>Mujhe tumhare saath woh everyday wali life jeeni hai.</p><p>Random conversations.<br>Chhoti chhoti outings.<br>Stupid jokes.<br>Late-night talks.<br>Ek dusre ko pareshan karna.<br>Aur years later bhi ek dusre ki same stupid habits pe hasna.</p><p>Main perfect future promise nahi kar raha.</p><p>Bas itna promise hai ki main tumhe choose karta rahunga.</p><p>And I hope years later, when we look back at this website, we'll smile and think:</p><blockquote>“Haan... humne saath mein bohot accha kiya.”</blockquote><span class="future-mark">always us</span></article>
+      </div>
+    </section>
+
+    <section class="section-pad wish-section" id="wish">
+      <div class="container narrow centered-content">
+        <div class="section-heading centered reveal"><p class="eyebrow">Chapter ten · back to you</p><h2>Happy Birthday,<br><i>Jaan Bacha</i> <span>♥</span></h2></div>
+        <article class="wish-card reveal"><div class="cake" aria-label="Birthday cake illustration"><div class="flames"><i></i><i></i><i></i></div><div class="candles"><i></i><i></i><i></i></div><div class="cake-top"></div><div class="cake-body"></div><div class="cake-plate"></div></div><div class="wish-copy"><p>Today is your day.</p><p>I hope this year brings you everything you've been wishing for.</p><p>I hope you grow, laugh, travel, achieve everything you want and become even happier than you are today.</p><p>And selfishly...</p><p>I hope I get to be beside you through all of it.</p><p class="wish-strong">Happy Birthday, my love. ❤️</p></div><button class="button button-dark" id="wishButton" type="button">Make a Wish <span>✦</span></button><p class="wish-result" id="wishResult" aria-live="polite"></p></article>
+      </div>
+    </section>
+
+    <section class="finale" id="finale">
+      <div class="finale-stars" aria-hidden="true"></div>
+      <div class="container finale-content reveal"><p class="eyebrow">the end of this page</p><div class="finale-lines"><span>5 Years <i>♥</i></span><span>1,825+ days</span><span>Countless memories</span><span>One person</span><span class="final-name">My Jaan Bacha</span><span>And a whole lifetime still to go.</span></div><div class="finale-rule"></div><h2>Happy Birthday &amp;<br>Happy 5 Years,<br><i>My Love</i> <span>♥</span></h2><p class="finale-last">Year 6 starts here.</p><button class="button button-light" id="finalReplay" type="button">Replay Our Story <span>↻</span></button></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Memory viewer" aria-hidden="true"><button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close memory viewer">×</button><button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Previous memory">←</button><div class="lightbox-content"><div class="lightbox-image image-frame"><img id="lightboxImage" alt=""><span class="image-placeholder">memory photo</span></div><div class="lightbox-caption"><span id="lightboxDate"></span><h3 id="lightboxTitle"></h3><p id="lightboxText"></p></div></div><button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Next memory">→</button></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
