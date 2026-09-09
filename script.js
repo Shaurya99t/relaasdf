@@ -232,6 +232,7 @@ function startDemoMelody() {
   demoAudio.playing = true;
   demoAudio.startedAt = performance.now() / 1000;
   $('#musicToggle') && ($('#musicToggle').textContent = 'Ⅱ');
+  $('#musicEqualizer')?.classList.add('is-playing');
   $('#player')?.classList.add('is-playing');
   scheduleDemoMelody();
   demoAudio.interval = window.setInterval(() => {
@@ -266,6 +267,7 @@ function stopDemoMelody() {
   window.clearTimeout(demoAudio.timer);
   window.clearInterval(demoAudio.interval);
   if ($('#musicToggle')) $('#musicToggle').textContent = '▶';
+  $('#musicEqualizer')?.classList.remove('is-playing');
   $('#player')?.classList.remove('is-playing');
 }
 
@@ -273,7 +275,7 @@ function setupPlayer() {
   if (!audio || !CONFIG.playlist?.length) return;
   const state = { index: 0, started: false, demo: false };
   const top = {
-    title: $('#musicTitle'), position: $('#musicPosition'), toggle: $('#musicToggle'), prev: $('#musicPrev'), next: $('#musicNext'),
+    title: $('#musicTitle'), position: $('#musicPosition'), equalizer: $('#musicEqualizer'), toggle: $('#musicToggle'), prev: $('#musicPrev'), next: $('#musicNext'),
     progress: $('#musicProgress'), current: $('#musicCurrent'), duration: $('#musicDuration'),
     volume: $('#musicVolume'), prompt: $('#musicAutoplayPrompt')
   };
@@ -307,14 +309,19 @@ function setupPlayer() {
     if (state.demo) stopDemoMelody();
     audio.pause();
     audio.currentTime = 0;
+    $('#musicBar')?.classList.add('is-changing');
     state.demo = false;
     state.index = modulo(nextIndex, CONFIG.playlist.length);
     renderSong();
+    window.setTimeout(() => $('#musicBar')?.classList.remove('is-changing'), 220);
     if (autoPlay) playCurrent();
   };
   top.prev.addEventListener('click', () => selectSong(state.index - 1));
   top.next.addEventListener('click', () => selectSong(state.index + 1));
-  top.toggle.addEventListener('click', () => audio.paused ? playCurrent() : audio.pause());
+  top.toggle.addEventListener('click', () => {
+    if (state.demo) { demoAudio.playing ? stopDemoMelody() : playCurrent(); return; }
+    audio.paused ? playCurrent() : audio.pause();
+  });
   top.prompt.addEventListener('click', playCurrent);
   top.progress.addEventListener('input', (event) => { if (audio.duration) audio.currentTime = (event.target.value / 100) * audio.duration; });
   top.volume.addEventListener('input', (event) => { audio.volume = Number(event.target.value); });
@@ -330,8 +337,8 @@ function setupPlayer() {
     top.current.textContent = formatTime(audio.currentTime);
     syncLegacy(audio.currentTime, audio.duration, !audio.paused);
   });
-  audio.addEventListener('play', () => { showPrompt(false); top.toggle.textContent = 'Ⅱ'; top.toggle.setAttribute('aria-label', `Pause ${CONFIG.playlist[state.index].title}`); syncLegacy(audio.currentTime, audio.duration, true); });
-  audio.addEventListener('pause', () => { top.toggle.textContent = '▶'; top.toggle.setAttribute('aria-label', `Play ${CONFIG.playlist[state.index].title}`); syncLegacy(audio.currentTime, audio.duration, false); });
+  audio.addEventListener('play', () => { showPrompt(false); top.toggle.textContent = 'Ⅱ'; top.toggle.setAttribute('aria-label', `Pause ${CONFIG.playlist[state.index].title}`); top.equalizer.classList.add('is-playing'); syncLegacy(audio.currentTime, audio.duration, true); });
+  audio.addEventListener('pause', () => { top.toggle.textContent = '▶'; top.toggle.setAttribute('aria-label', `Play ${CONFIG.playlist[state.index].title}`); top.equalizer.classList.remove('is-playing'); syncLegacy(audio.currentTime, audio.duration, false); });
   audio.addEventListener('ended', () => selectSong(state.index + 1, true));
   audio.addEventListener('error', () => { state.demo = true; top.title.textContent = 'Demo melody · replace anytime'; top.duration.textContent = formatTime(demoAudio.duration); showPrompt(true); });
   renderSong();
@@ -733,20 +740,54 @@ function buildSwipeDeck(target, items, renderCard, label) {
     renderedCards.forEach((card, index) => {
       const active = index === currentIndex;
       card.classList.toggle('is-active', active);
-      card.style.display = active ? 'block' : 'none';
+      card.style.display = 'block';
       card.style.opacity = active ? '1' : '0';
       card.style.visibility = active ? 'visible' : 'hidden';
       card.style.transform = 'none';
+      card.style.filter = 'none';
+      card.style.pointerEvents = active ? 'auto' : 'none';
       card.tabIndex = active ? 0 : -1;
       card.setAttribute('aria-hidden', active ? 'false' : 'true');
     });
     count.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
     $$('.deck-dot', target).forEach((dot, index) => dot.classList.toggle('is-active', index === currentIndex));
   };
+  let moving = false;
   function goTo(index) {
-    currentIndex = modulo(index);
+    if (moving) return;
+    const nextIndex = modulo(index);
+    if (nextIndex === currentIndex) return;
+    const previousIndex = currentIndex;
+    const direction = nextIndex > previousIndex || (previousIndex === items.length - 1 && nextIndex === 0) ? 1 : -1;
+    const outgoing = renderedCards[previousIndex];
+    const incoming = renderedCards[nextIndex];
+    moving = true;
     target.classList.add('has-interacted');
-    update();
+    outgoing.classList.add('is-leaving');
+    incoming.classList.add('is-entering');
+    outgoing.style.visibility = 'visible';
+    outgoing.style.pointerEvents = 'none';
+    incoming.style.display = 'block';
+    incoming.style.visibility = 'visible';
+    incoming.style.pointerEvents = 'none';
+    incoming.style.opacity = '0';
+    incoming.style.transform = `translate3d(${direction > 0 ? 28 : -28}px,0,0) scale(.97)`;
+    incoming.style.filter = 'blur(4px)';
+    requestAnimationFrame(() => {
+      outgoing.style.opacity = '0';
+      outgoing.style.transform = `translate3d(${direction > 0 ? -28 : 28}px,0,0) scale(.96)`;
+      outgoing.style.filter = 'blur(4px)';
+      incoming.style.opacity = '1';
+      incoming.style.transform = 'translate3d(0,0,0) scale(1)';
+      incoming.style.filter = 'none';
+    });
+    window.setTimeout(() => {
+      currentIndex = nextIndex;
+      outgoing.classList.remove('is-leaving');
+      incoming.classList.remove('is-entering');
+      update();
+      moving = false;
+    }, prefersReducedMotion ? 0 : 560);
   }
   const finishPointer = (event) => {
     if (!pointerActive) return;
@@ -857,8 +898,8 @@ function setupScrapbookDecks() {
       'You are probably right. Main bas maan nahi raha hoon.',
       'Bas tum saamne ho, aur somehow that is enough.'
     ];
-    copy.insertAdjacentHTML('beforeend', `<blockquote class="story-quote">${storyQuotes[index]}</blockquote>`);
     copy.innerHTML = `<span class="memory-date">STORY ${String(index + 1).padStart(2, '0')} · US</span><h3>${title}</h3><p>${storyDescription}</p>`;
+    copy.insertAdjacentHTML('beforeend', `<blockquote class="story-quote">${storyQuotes[index]}</blockquote>`);
     card.append(copy);
     return card;
   }, 'Us in little stories');
@@ -910,7 +951,145 @@ function setupLetterPages() {
   $('#openLetter').addEventListener('click', () => deck.setAttribute('aria-hidden', 'false'), { once: true });
 }
 
+function setupPageLoader() {
+  const loader = $('#pageLoader');
+  if (!loader) return;
+  const reveal = () => loader.classList.add('is-ready');
+  window.addEventListener('load', () => window.setTimeout(reveal, prefersReducedMotion ? 80 : 850), { once: true });
+  window.setTimeout(reveal, prefersReducedMotion ? 120 : 1400);
+}
+
+function setupAmbientParticles() {
+  if (prefersReducedMotion || window.innerWidth < 520) return;
+  const field = document.createDocumentFragment();
+  for (let index = 0; index < 10; index += 1) {
+    const particle = document.createElement('span');
+    particle.className = 'ambient-particle';
+    particle.style.setProperty('--particle-x', `${8 + Math.random() * 84}%`);
+    particle.style.setProperty('--particle-y', `${10 + Math.random() * 82}%`);
+    particle.style.setProperty('--particle-delay', `${Math.random() * -12}s`);
+    particle.style.setProperty('--particle-size', `${2 + Math.random() * 3}px`);
+    particle.textContent = index % 5 === 0 ? '♡' : '';
+    field.append(particle);
+  }
+  document.body.append(field);
+}
+
+function setupParallax() {
+  if (prefersReducedMotion || window.innerWidth < 700) return;
+  const art = $('.hero-art');
+  if (!art) return;
+  let ticking = false;
+  const update = () => {
+    art.style.setProperty('--parallax-y', `${Math.min(window.scrollY * .045, 28)}px`);
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+}
+
+function setupInteractionFeedback() {
+  if (prefersReducedMotion) return;
+  let downX = 0;
+  let downY = 0;
+  let downTime = 0;
+  document.addEventListener('pointerdown', (event) => {
+    downX = event.clientX;
+    downY = event.clientY;
+    downTime = performance.now();
+  }, { passive: true });
+  document.addEventListener('pointerup', (event) => {
+    const moved = Math.hypot(event.clientX - downX, event.clientY - downY);
+    const elapsed = performance.now() - downTime;
+    const isRange = event.target.closest('input[type="range"]');
+    if (!isRange && moved < 12 && elapsed < 700) spawnClickHearts(event.clientX, event.clientY, 5);
+  }, { passive: true });
+  document.addEventListener('dblclick', (event) => {
+    const photo = event.target.closest('.memory-deck-card .image-frame, .story-deck-card .image-frame, .photo-card .image-frame');
+    if (photo) spawnPhotoBloom(event.clientX, event.clientY);
+  });
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('button, .button, .icon-button');
+    if (!button || button.disabled) return;
+    spawnRipple(button, event.clientX, event.clientY);
+  });
+  setupCursorGlow();
+  setupFinaleBloom();
+}
+
+function spawnClickHearts(x, y, amount = 5) {
+  const palette = ['#d88991', '#c97983', '#f4dde0', '#b66e77', '#faf7f0'];
+  for (let index = 0; index < amount; index += 1) {
+    const heart = document.createElement('span');
+    heart.className = 'click-heart';
+    heart.textContent = index % 3 === 0 ? '♡' : '♥';
+    heart.style.left = `${x}px`;
+    heart.style.top = `${y}px`;
+    heart.style.color = palette[index % palette.length];
+    heart.style.setProperty('--heart-x', `${(Math.random() - .5) * 100}px`);
+    heart.style.setProperty('--heart-y', `${-65 - Math.random() * 70}px`);
+    heart.style.setProperty('--heart-rotate', `${(Math.random() - .5) * 70}deg`);
+    heart.style.setProperty('--heart-duration', `${.72 + Math.random() * .55}s`);
+    document.body.append(heart);
+    window.setTimeout(() => heart.remove(), 1500);
+  }
+}
+
+function spawnPhotoBloom(x, y) {
+  const bloom = document.createElement('span');
+  bloom.className = 'photo-bloom';
+  bloom.textContent = '♥';
+  bloom.style.left = `${x}px`;
+  bloom.style.top = `${y}px`;
+  document.body.append(bloom);
+  window.setTimeout(() => bloom.remove(), 1500);
+}
+
+function spawnRipple(button, x, y) {
+  const rect = button.getBoundingClientRect();
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.left = `${x - rect.left}px`;
+  ripple.style.top = `${y - rect.top}px`;
+  button.append(ripple);
+  window.setTimeout(() => ripple.remove(), 650);
+}
+
+function setupCursorGlow() {
+  if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 900) return;
+  const glow = document.createElement('span');
+  glow.className = 'cursor-glow';
+  document.body.append(glow);
+  let frame = 0;
+  let x = -100;
+  let y = -100;
+  document.addEventListener('pointermove', (event) => {
+    x = event.clientX;
+    y = event.clientY;
+    if (!frame) frame = requestAnimationFrame(() => { glow.style.transform = `translate3d(${x}px,${y}px,0)`; frame = 0; });
+  }, { passive: true });
+}
+
+function setupFinaleBloom() {
+  const finale = $('.finale');
+  if (!finale || !('IntersectionObserver' in window)) return;
+  let bloomed = false;
+  const observer = new IntersectionObserver((entries) => {
+    if (!bloomed && entries.some((entry) => entry.isIntersecting)) {
+      bloomed = true;
+      const rect = finale.getBoundingClientRect();
+      spawnClickHearts(window.innerWidth / 2, Math.max(160, rect.top + rect.height * .58), 10);
+      observer.disconnect();
+    }
+  }, { threshold: .35 });
+  observer.observe(finale);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  setupPageLoader();
+  setupAmbientParticles();
+  setupParallax();
   createMemoryCards();
   createStoryCards();
   createNoteCards();
@@ -924,4 +1103,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setupReveal();
   setupProgress();
   setupReplay();
+  setupInteractionFeedback();
 });

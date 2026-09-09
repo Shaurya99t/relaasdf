@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="app-fixes.css">
 </head>
 <body class="is-locked">
+  <div class="page-loader" id="pageLoader" aria-hidden="true"><span>RELA</span><small>our little story</small></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="progress-track" aria-hidden="true"><span id="storyProgress"></span></div>
 
@@ -38,7 +39,7 @@
     <div class="music-bar-inner">
       <div class="music-brand">
         <span class="music-heart" aria-hidden="true">♥</span>
-        <div><span class="music-label">OUR SONG · <b id="musicPosition">01 / 04</b></span><strong id="musicTitle">Loading our song...</strong></div>
+        <div><span class="music-label">OUR SONG · <b id="musicPosition">01 / 04</b></span><strong id="musicTitle">Loading our song...</strong><span class="music-equalizer" id="musicEqualizer" aria-hidden="true"><i></i><i></i><i></i></span></div>
       </div>
       <div class="music-actions">
         <button class="music-control" id="musicPrev" type="button" aria-label="Previous song">←</button>
